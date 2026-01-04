@@ -122,8 +122,9 @@ const Compass = (p) => (
   </IconWrapper>
 );
 
-// Your OpenWeatherMap API Key
-const API_KEY = "9d1b89cb921d4c9f9eb61a15826f059f";
+// Read OpenWeatherMap API Key from Vite env. Support both VITE_OPENWEATHER_API_KEY and VITE_WEATHER_API_KEY.
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY || import.meta.env.VITE_WEATHER_API_KEY || '';
+if (!API_KEY) console.warn('No OpenWeatherMap API key found in Vite env (VITE_OPENWEATHER_API_KEY or VITE_WEATHER_API_KEY)');
 
 const WeatherDashboard = () => {
   const [searchCity, setSearchCity] = useState('');
