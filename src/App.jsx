@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Droplets, Wind, Eye, Gauge, Sun, Cloud, CloudRain, Sunrise, Sunset, Thermometer, CloudSnow, Zap, Waves, TrendingUp, Compass } from 'lucide-react';
 
 // Your OpenWeatherMap API Key
-const API_KEY = "8f6bf9459b117937495fe29490b78d5a";
+const API_KEY = "9d1b89cb921d4c9f9eb61a15826f059f";
 
 const WeatherDashboard = () => {
   const [searchCity, setSearchCity] = useState('');
@@ -65,7 +65,7 @@ const WeatherDashboard = () => {
 
       if (weatherData.cod !== 200) {
         if (weatherData.cod === 401) {
-          throw new Error('❌ API Key Error: Your API key is invalid or not activated yet. New API keys from OpenWeatherMap take 1-2 hours to activate. Please wait and try again, or get a new key from https://openweathermap.org/api');
+          throw new Error('API Key Error: Your API key is invalid or not activated yet. New API keys from OpenWeatherMap take 1-2 hours to activate. Please wait and try again.');
         }
         throw new Error(weatherData.message || 'City not found');
       }
@@ -190,8 +190,8 @@ const WeatherDashboard = () => {
                 <ul className="list-disc list-inside space-y-1 text-xs">
                   <li>New API keys take <strong>1-2 hours</strong> to activate after creation</li>
                   <li>Check if you copied the entire key correctly</li>
-                  <li>Make sure the key is from <a href="https://openweathermap.org/api" target="_blank" className="underline">OpenWeatherMap</a></li>
-                  <li>Try generating a new API key if this one doesn't work</li>
+                  <li>Make sure the key is from <a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer" className="underline">OpenWeatherMap</a></li>
+                  <li>Try generating a new API key if this one does not work</li>
                 </ul>
               </div>
             )}
