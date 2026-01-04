@@ -1,5 +1,126 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Droplets, Wind, Eye, Gauge, Sun, Cloud, CloudRain, Sunrise, Sunset, Thermometer, CloudSnow, Zap, Waves, TrendingUp, Compass } from 'lucide-react';
+
+// Lightweight local SVG icon components to avoid external dependency on `lucide-react`
+const IconWrapper = ({ children, size = 24, className = '', style = {} }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    style={style}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {children}
+  </svg>
+);
+
+const Search = (p) => (
+  <IconWrapper {...p}>
+    <circle cx="11" cy="11" r="6" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+  </IconWrapper>
+);
+const MapPin = (p) => (
+  <IconWrapper {...p}>
+    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </IconWrapper>
+);
+const Droplets = (p) => (
+  <IconWrapper {...p}>
+    <path d="M12 2s4 4.5 4 7a4 4 0 1 1-8 0c0-2.5 4-7 4-7z" />
+  </IconWrapper>
+);
+const Wind = (p) => (
+  <IconWrapper {...p}>
+    <path d="M3 12h11a4 4 0 1 0-4-4" />
+    <path d="M3 16h9a3 3 0 1 0-3-3" />
+  </IconWrapper>
+);
+const Eye = (p) => (
+  <IconWrapper {...p}>
+    <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" />
+    <circle cx="12" cy="12" r="3" />
+  </IconWrapper>
+);
+const Gauge = (p) => (
+  <IconWrapper {...p}>
+    <path d="M3 12a9 9 0 1 0 18 0" />
+    <path d="M12 7v5l3 3" />
+  </IconWrapper>
+);
+const Sun = (p) => (
+  <IconWrapper {...p}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2" />
+    <path d="M12 20v2" />
+    <path d="M4.9 4.9l1.4 1.4" />
+    <path d="M18.7 18.7l1.4 1.4" />
+    <path d="M2 12h2" />
+    <path d="M20 12h2" />
+    <path d="M4.9 19.1l1.4-1.4" />
+    <path d="M18.7 5.3l1.4-1.4" />
+  </IconWrapper>
+);
+const Cloud = (p) => (
+  <IconWrapper {...p}>
+    <path d="M20 17.58A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 4 16.25" />
+  </IconWrapper>
+);
+const CloudRain = (p) => (
+  <IconWrapper {...p}>
+    <path d="M16 13a4 4 0 0 0-8 0" />
+    <path d="M8 19l1-2" />
+    <path d="M12 19l1-2" />
+    <path d="M16 19l1-2" />
+  </IconWrapper>
+);
+const CloudSnow = (p) => (
+  <IconWrapper {...p}>
+    <path d="M16 13a4 4 0 0 0-8 0" />
+    <path d="M8 18l0 0" />
+    <path d="M12 18l0 0" />
+    <path d="M16 18l0 0" />
+  </IconWrapper>
+);
+const Sunrise = (p) => (
+  <IconWrapper {...p}>
+    <path d="M17 18a5 5 0 0 0-10 0" />
+    <path d="M12 2v6" />
+  </IconWrapper>
+);
+const Sunset = Sunrise;
+const Thermometer = (p) => (
+  <IconWrapper {...p}>
+    <path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0z" />
+  </IconWrapper>
+);
+const Zap = (p) => (
+  <IconWrapper {...p}>
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+  </IconWrapper>
+);
+const Waves = (p) => (
+  <IconWrapper {...p}>
+    <path d="M2 12c4-4 8 4 12 0s8 4 12 0" />
+  </IconWrapper>
+);
+const TrendingUp = (p) => (
+  <IconWrapper {...p}>
+    <polyline points="3 17 9 11 13 15 21 7" />
+  </IconWrapper>
+);
+const Compass = (p) => (
+  <IconWrapper {...p}>
+    <circle cx="12" cy="12" r="10" />
+    <polygon points="16 8 12 12 8 16 16 8" />
+  </IconWrapper>
+);
 
 // Your OpenWeatherMap API Key
 const API_KEY = "9d1b89cb921d4c9f9eb61a15826f059f";
