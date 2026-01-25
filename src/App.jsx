@@ -1,424 +1,595 @@
-import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Droplets, Wind, Eye, Gauge, Sun, Cloud, CloudRain, Sunrise, Sunset, Thermometer, CloudSnow, Zap, Waves, TrendingUp, Compass } from 'lucide-react';
+import React, { useState } from 'react';
+import { Plus, Trash2, Edit2, Check, X, Search, Calendar, Users, Folder, BarChart3, Clock, AlertCircle, CheckCircle2 } from 'lucide-react';
 
-// Your OpenWeatherMap API Key
-const API_KEY = "8f6bf9459b117937495fe29490b78d5a";
-
-const WeatherDashboard = () => {
-  const [searchCity, setSearchCity] = useState('');
-  const [weather, setWeather] = useState(null);
-  const [hourlyForecast, setHourlyForecast] = useState([]);
-  const [dailyForecast, setDailyForecast] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [currentTime, setCurrentTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const getWeatherIcon = (condition) => {
-    const lower = condition?.toLowerCase() || '';
-    if (lower.includes('rain')) return CloudRain;
-    if (lower.includes('clear') || lower.includes('sun')) return Sun;
-    if (lower.includes('cloud')) return Cloud;
-    if (lower.includes('snow')) return CloudSnow;
-    return Cloud;
+export default function SlimFileProjectManager() {
+  const teamMembers = {
+    'Leadership': [
+      { name: 'Isaac Abakah', role: 'CEO and Founder' },
+      { name: 'Emmanuel Abakah', role: 'Chief Executive Officer' }
+    ],
+    'Development': [
+      { name: 'Abel Abendin', role: 'FullStack Developer' },
+      { name: 'Selorm Sem', role: 'MERN Stack Developer' },
+      { name: 'Kofi Atta Agyare', role: 'Frontend Developer' },
+      { name: 'Juliet Angaandi', role: 'Frontend Developer' },
+      { name: 'Micheal Selby', role: 'Backend Developer' }
+    ],
+    'Design': [
+      { name: 'Broderick Djan', role: 'Motion Designer' },
+      { name: 'Ferdinand Ofei', role: 'UI/UX Designer' },
+      { name: 'Kofi Obuom Agyare', role: 'UI/UX Designer' },
+      { name: 'Nii Teiko Aryee', role: 'UI/UX Designer' },
+      { name: 'Edward', role: 'Graphic Designer' },
+      { name: 'Penuel Sablah', role: 'Graphic Designer' }
+    ],
+    'Marketing': [
+      { name: 'Helena Amoabeng', role: 'Digital Marketer' },
+      { name: 'Veronica Akwojinga', role: 'Linkedin Marketer' }
+    ],
+    'Operations': [
+      { name: 'Godfred Agbosu', role: 'Partnership Head' }
+    ],
+    'Legal': [
+      { name: 'Marlyn', role: 'Legal Expert' }
+    ],
+    'Research': [
+      { name: 'Munira Nuhu', role: 'Research Lead' },
+      { name: 'Joel Eli Tsewabge', role: 'Analytical Expert' }
+    ]
   };
 
-  const getBackgroundGradient = (condition) => {
-    const lower = condition?.toLowerCase() || '';
-    if (lower.includes('clear') || lower.includes('sun')) {
-      return 'from-sky-400 via-blue-400 to-indigo-500';
+  const allMembers = Object.values(teamMembers).flat();
+
+  const [projects, setProjects] = useState([
+    {
+      id: 1,
+      name: 'PDF Compression Algorithm v2.0',
+      description: 'Enhance PDF compression quality and speed',
+      category: 'Development',
+      tasks: [
+        { id: 1, title: 'Research advanced compression techniques', assignee: 'Munira Nuhu', priority: 'high', status: 'completed', dueDate: '2026-01-15' },
+        { id: 2, title: 'Implement new compression engine', assignee: 'Abel Abendin', priority: 'high', status: 'in-progress', dueDate: '2026-01-25' },
+        { id: 3, title: 'Backend API optimization', assignee: 'Micheal Selby', priority: 'high', status: 'in-progress', dueDate: '2026-01-28' },
+        { id: 4, title: 'Frontend integration', assignee: 'Selorm Sem', priority: 'medium', status: 'todo', dueDate: '2026-02-01' },
+        { id: 5, title: 'Quality testing and analytics', assignee: 'Joel Eli Tsewabge', priority: 'medium', status: 'todo', dueDate: '2026-02-05' }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Website UI/UX Redesign',
+      description: 'Modernize interface for better user experience',
+      category: 'Design',
+      tasks: [
+        { id: 6, title: 'User flow analysis', assignee: 'Ferdinand Ofei', priority: 'high', status: 'completed', dueDate: '2026-01-10' },
+        { id: 7, title: 'Create wireframes and mockups', assignee: 'Nii Teiko Aryee', priority: 'high', status: 'completed', dueDate: '2026-01-18' },
+        { id: 8, title: 'Design system development', assignee: 'Kofi Obuom Agyare', priority: 'high', status: 'in-progress', dueDate: '2026-01-22' },
+        { id: 9, title: 'Marketing graphics creation', assignee: 'Penuel Sablah', priority: 'medium', status: 'in-progress', dueDate: '2026-01-25' },
+        { id: 10, title: 'Motion graphics for landing page', assignee: 'Broderick Djan', priority: 'medium', status: 'todo', dueDate: '2026-01-30' },
+        { id: 11, title: 'Frontend implementation', assignee: 'Kofi Atta Agyare', priority: 'high', status: 'in-progress', dueDate: '2026-02-02' },
+        { id: 12, title: 'Responsive design polish', assignee: 'Juliet Angaandi', priority: 'medium', status: 'todo', dueDate: '2026-02-05' }
+      ]
+    },
+    {
+      id: 3,
+      name: 'Q1 2026 Marketing Campaign',
+      description: 'Drive user acquisition and brand awareness',
+      category: 'Marketing',
+      tasks: [
+        { id: 13, title: 'Market research and strategy', assignee: 'Munira Nuhu', priority: 'high', status: 'completed', dueDate: '2026-01-08' },
+        { id: 14, title: 'Social media content calendar', assignee: 'Helena Amoabeng', priority: 'high', status: 'completed', dueDate: '2026-01-12' },
+        { id: 15, title: 'LinkedIn B2B outreach strategy', assignee: 'Veronica Akwojinga', priority: 'high', status: 'in-progress', dueDate: '2026-01-20' },
+        { id: 16, title: 'Campaign graphics design', assignee: 'Edward', priority: 'high', status: 'in-progress', dueDate: '2026-01-23' },
+        { id: 17, title: 'Video content creation', assignee: 'Broderick Djan', priority: 'medium', status: 'todo', dueDate: '2026-01-28' },
+        { id: 18, title: 'Campaign analytics setup', assignee: 'Joel Eli Tsewabge', priority: 'medium', status: 'todo', dueDate: '2026-01-30' }
+      ]
+    },
+    {
+      id: 4,
+      name: 'Partnership Development Initiative',
+      description: 'Expand strategic partnerships and collaborations',
+      category: 'Operations',
+      tasks: [
+        { id: 19, title: 'Identify potential partners', assignee: 'Godfred Agbosu', priority: 'high', status: 'in-progress', dueDate: '2026-01-20' },
+        { id: 20, title: 'Partnership agreement templates', assignee: 'Marlyn', priority: 'high', status: 'in-progress', dueDate: '2026-01-22' },
+        { id: 21, title: 'Partnership presentation deck', assignee: 'Penuel Sablah', priority: 'medium', status: 'todo', dueDate: '2026-01-25' },
+        { id: 22, title: 'Outreach campaign', assignee: 'Veronica Akwojinga', priority: 'medium', status: 'todo', dueDate: '2026-01-28' }
+      ]
+    },
+    {
+      id: 5,
+      name: 'Product Analytics & Optimization',
+      description: 'Data-driven insights for product improvement',
+      category: 'Research',
+      tasks: [
+        { id: 23, title: 'User behavior analysis', assignee: 'Joel Eli Tsewabge', priority: 'high', status: 'in-progress', dueDate: '2026-01-20' },
+        { id: 24, title: 'Compression efficiency research', assignee: 'Munira Nuhu', priority: 'high', status: 'in-progress', dueDate: '2026-01-24' },
+        { id: 25, title: 'Competitive analysis report', assignee: 'Joel Eli Tsewabge', priority: 'medium', status: 'todo', dueDate: '2026-01-30' },
+        { id: 26, title: 'Feature prioritization study', assignee: 'Munira Nuhu', priority: 'medium', status: 'todo', dueDate: '2026-02-03' }
+      ]
+    },
+    {
+      id: 6,
+      name: 'Company Legal Compliance & IP Protection',
+      description: 'Ensure legal compliance and protect intellectual property',
+      category: 'Legal',
+      tasks: [
+        { id: 27, title: 'Terms of Service update', assignee: 'Marlyn', priority: 'high', status: 'in-progress', dueDate: '2026-01-25' },
+        { id: 28, title: 'Privacy policy review', assignee: 'Marlyn', priority: 'high', status: 'todo', dueDate: '2026-01-28' },
+        { id: 29, title: 'Patent research for compression tech', assignee: 'Marlyn', priority: 'medium', status: 'todo', dueDate: '2026-02-05' }
+      ]
+    },
+    {
+      id: 7,
+      name: 'Strategic Planning 2026',
+      description: 'Define company direction and growth strategy',
+      category: 'Leadership',
+      tasks: [
+        { id: 30, title: 'Q1 performance review', assignee: 'Isaac Abakah', priority: 'high', status: 'in-progress', dueDate: '2026-01-22' },
+        { id: 31, title: 'Annual roadmap planning', assignee: 'Emmanuel Abakah', priority: 'high', status: 'in-progress', dueDate: '2026-01-25' },
+        { id: 32, title: 'Team capacity planning', assignee: 'Isaac Abakah', priority: 'medium', status: 'todo', dueDate: '2026-01-30' },
+        { id: 33, title: 'Budget allocation review', assignee: 'Emmanuel Abakah', priority: 'medium', status: 'todo', dueDate: '2026-02-02' }
+      ]
     }
-    if (lower.includes('rain')) {
-      return 'from-slate-700 via-slate-600 to-slate-800';
-    }
-    if (lower.includes('cloud')) {
-      return 'from-gray-500 via-slate-600 to-gray-700';
-    }
-    if (lower.includes('snow')) {
-      return 'from-blue-300 via-cyan-300 to-sky-400';
-    }
-    return 'from-violet-500 via-purple-500 to-fuchsia-500';
+  ]);
+
+  const [activeView, setActiveView] = useState('dashboard');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedStat, setSelectedStat] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [showAddProject, setShowAddProject] = useState(false);
+  const [showAddTask, setShowAddTask] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [newProject, setNewProject] = useState({ name: '', description: '', category: 'Development' });
+  const [newTask, setNewTask] = useState({ title: '', assignee: '', priority: 'medium', status: 'todo', dueDate: '' });
+
+  const categories = ['Leadership', 'Development', 'Design', 'Marketing', 'Operations', 'Legal', 'Research'];
+
+  const addProject = () => {
+    if (!newProject.name.trim()) return;
+    setProjects([...projects, { id: Date.now(), ...newProject, tasks: [] }]);
+    setNewProject({ name: '', description: '', category: 'Development' });
+    setShowAddProject(false);
   };
 
-  const fetchWeather = async (city) => {
-    if (!city.trim()) return;
-
-    setLoading(true);
-    setError('');
-
-    try {
-      console.log('Fetching weather for:', city);
-      console.log('Using API Key:', API_KEY);
-      
-      const weatherRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
-      );
-      
-      console.log('Weather response status:', weatherRes.status);
-      
-      const weatherData = await weatherRes.json();
-      console.log('Weather data:', weatherData);
-
-      if (weatherData.cod !== 200) {
-        if (weatherData.cod === 401) {
-          throw new Error('API Key Error: Your API key is invalid or not activated yet. New API keys from OpenWeatherMap take 1-2 hours to activate. Please wait and try again.');
-        }
-        throw new Error(weatherData.message || 'City not found');
+  const deleteProject = (id) => {
+    if (confirm('Delete this project?')) {
+      setProjects(projects.filter(p => p.id !== id));
+      if (selectedProject?.id === id) {
+        setSelectedProject(null);
+        setActiveView('dashboard');
       }
-
-      const forecastRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
-      );
-      const forecastData = await forecastRes.json();
-
-      const sunrise = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-      const sunset = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
-      setWeather({
-        city: weatherData.name,
-        country: weatherData.sys.country,
-        temp: Math.round(weatherData.main.temp),
-        feelsLike: Math.round(weatherData.main.feels_like),
-        condition: weatherData.weather[0].main,
-        description: weatherData.weather[0].description,
-        humidity: weatherData.main.humidity,
-        windSpeed: Math.round(weatherData.wind.speed * 3.6),
-        windDirection: getWindDirection(weatherData.wind.deg),
-        windDeg: weatherData.wind.deg,
-        pressure: weatherData.main.pressure,
-        visibility: Math.round(weatherData.visibility / 1000),
-        dewPoint: Math.round(weatherData.main.temp - ((100 - weatherData.main.humidity) / 5)),
-        sunrise,
-        sunset,
-        tempMax: Math.round(weatherData.main.temp_max),
-        tempMin: Math.round(weatherData.main.temp_min),
-      });
-
-      const hourly = forecastData.list.slice(0, 8).map(item => ({
-        time: new Date(item.dt * 1000).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
-        temp: Math.round(item.main.temp),
-        condition: item.weather[0].main,
-        icon: getWeatherIcon(item.weather[0].main),
-      }));
-      setHourlyForecast(hourly);
-
-      const daily = forecastData.list
-        .filter(item => item.dt_txt.includes('12:00:00'))
-        .slice(0, 5)
-        .map(item => ({
-          day: new Date(item.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }),
-          high: Math.round(item.main.temp_max),
-          low: Math.round(item.main.temp_min),
-          condition: item.weather[0].main,
-          icon: getWeatherIcon(item.weather[0].main),
-        }));
-      setDailyForecast(daily);
-
-      setError('');
-    } catch (err) {
-      setError(err.message || 'Failed to fetch weather data');
-      setWeather(null);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const getWindDirection = (degrees) => {
-    const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    const index = Math.round(degrees / 45) % 8;
-    return directions[index];
+  const addTask = () => {
+    if (!newTask.title.trim() || !selectedProject) return;
+    const updated = projects.map(p => 
+      p.id === selectedProject.id ? { ...p, tasks: [...p.tasks, { id: Date.now(), ...newTask }] } : p
+    );
+    setProjects(updated);
+    setSelectedProject(updated.find(p => p.id === selectedProject.id));
+    setNewTask({ title: '', assignee: '', priority: 'medium', status: 'todo', dueDate: '' });
+    setShowAddTask(false);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    fetchWeather(searchCity);
+  const updateTask = (projectId, taskId, updates) => {
+    const updated = projects.map(p => 
+      p.id === projectId ? { ...p, tasks: p.tasks.map(t => t.id === taskId ? { ...t, ...updates } : t) } : p
+    );
+    setProjects(updated);
+    setSelectedProject(updated.find(p => p.id === projectId));
   };
+
+  const deleteTask = (projectId, taskId) => {
+    const updated = projects.map(p => 
+      p.id === projectId ? { ...p, tasks: p.tasks.filter(t => t.id !== taskId) } : p
+    );
+    setProjects(updated);
+    setSelectedProject(updated.find(p => p.id === projectId));
+  };
+
+  const getProgress = (project) => {
+    if (project.tasks.length === 0) return 0;
+    return Math.round((project.tasks.filter(t => t.status === 'completed').length / project.tasks.length) * 100);
+  };
+
+  const getTasksByStatus = (status) => {
+    const tasks = [];
+    projects.forEach(project => {
+      project.tasks.forEach(task => {
+        if (status === 'all' || task.status === status) {
+          tasks.push({ ...task, projectName: project.name, projectId: project.id, projectCategory: project.category });
+        }
+      });
+    });
+    return tasks;
+  };
+
+  const getOverdueTasks = () => {
+    const tasks = [];
+    projects.forEach(project => {
+      project.tasks.forEach(task => {
+        if (task.status !== 'completed' && task.dueDate && new Date(task.dueDate) < new Date()) {
+          tasks.push({ ...task, projectName: project.name, projectId: project.id, projectCategory: project.category });
+        }
+      });
+    });
+    return tasks;
+  };
+
+  const stats = {
+    totalTasks: projects.reduce((sum, p) => sum + p.tasks.length, 0),
+    completedTasks: projects.reduce((sum, p) => sum + p.tasks.filter(t => t.status === 'completed').length, 0),
+    inProgressTasks: projects.reduce((sum, p) => sum + p.tasks.filter(t => t.status === 'in-progress').length, 0),
+    overdueTasks: projects.reduce((sum, p) => sum + p.tasks.filter(t => t.status !== 'completed' && t.dueDate && new Date(t.dueDate) < new Date()).length, 0)
+  };
+
+  const filtered = projects.filter(p => {
+    const search = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || p.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const category = filterCategory === 'all' || p.category === filterCategory;
+    return search && category;
+  });
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${weather ? getBackgroundGradient(weather.condition) : 'from-indigo-600 via-purple-600 to-pink-600'} transition-all duration-1000 p-4 md:p-6 lg:p-8`}>
-      <div className="max-w-7xl mx-auto space-y-6">
-        
-        {/* Animated Header */}
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-6 shadow-2xl">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg">
-                Weather Dashboard
-              </h1>
-              <p className="text-white/80 text-lg">
-                {currentTime.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-              </p>
-              <p className="text-white/70 text-sm mt-1">
-                {currentTime.toLocaleTimeString('en-US')}
-              </p>
-            </div>
-            
-            <form onSubmit={handleSearch} className="w-full md:w-auto">
-              <div className="flex gap-3">
-                <div className="relative flex-1 md:w-80">
-                  <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-white/70" size={20} />
-                  <input
-                    type="text"
-                    value={searchCity}
-                    onChange={(e) => setSearchCity(e.target.value)}
-                    placeholder="Search city..."
-                    className="w-full pl-14 pr-4 py-4 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all text-lg"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="px-8 py-4 bg-white/30 hover:bg-white/40 active:bg-white/50 backdrop-blur-md border border-white/30 text-white font-semibold rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                >
-                  {loading ? 'Searching...' : 'Search'}
-                </button>
+    <div className="min-h-screen bg-white">
+      {/* Header matching SlimFile exactly */}
+      <header className="bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div>
+                <h1 className="text-2xl font-bold text-black">SlimFile</h1>
+                <p className="text-xs text-gray-500">Project Management</p>
               </div>
-            </form>
+            </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search projects..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 text-sm rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 w-64"
+              />
+            </div>
           </div>
         </div>
+      </header>
 
-        {error && (
-          <div className="backdrop-blur-xl bg-red-500/20 border border-red-400/50 text-white px-6 py-4 rounded-2xl shadow-lg">
-            <p className="font-semibold mb-2">{error}</p>
-            {error.includes('API Key') && (
-              <div className="mt-3 p-3 bg-white/10 rounded-lg text-sm">
-                <p className="font-semibold mb-2">🔑 API Key Troubleshooting:</p>
-                <ul className="list-disc list-inside space-y-1 text-xs">
-                  <li>New API keys take <strong>1-2 hours</strong> to activate after creation</li>
-                  <li>Check if you copied the entire key correctly</li>
-                  <li>Make sure the key is from <a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer" className="underline">OpenWeatherMap</a></li>
-                  <li>Try generating a new API key if this one does not work</li>
-                </ul>
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Stats */}
+        {activeView === 'dashboard' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-3 bg-red-50 rounded-xl"><BarChart3 className="h-6 w-6 text-red-600" /></div>
+                <span className="text-3xl font-bold text-black">{stats.totalTasks}</span>
               </div>
-            )}
+              <p className="text-sm font-medium text-gray-600">Total Tasks</p>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-3 bg-green-50 rounded-xl"><CheckCircle2 className="h-6 w-6 text-green-600" /></div>
+                <span className="text-3xl font-bold text-green-600">{stats.completedTasks}</span>
+              </div>
+              <p className="text-sm font-medium text-gray-600">Completed</p>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-3 bg-red-50 rounded-xl"><Clock className="h-6 w-6 text-red-600" /></div>
+                <span className="text-3xl font-bold text-red-600">{stats.inProgressTasks}</span>
+              </div>
+              <p className="text-sm font-medium text-gray-600">In Progress</p>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-3 bg-orange-50 rounded-xl"><AlertCircle className="h-6 w-6 text-orange-600" /></div>
+                <span className="text-3xl font-bold text-orange-600">{stats.overdueTasks}</span>
+              </div>
+              <p className="text-sm font-medium text-gray-600">Overdue</p>
+            </div>
           </div>
         )}
 
-        {loading && (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-white/30 border-t-white"></div>
-            <p className="mt-4 text-white text-xl">Loading weather data...</p>
-          </div>
-        )}
+        {/* Actions */}
+        <div className="mb-8 flex items-center gap-3">
+          <button
+            onClick={() => { setActiveView('dashboard'); setSelectedProject(null); }}
+            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${activeView === 'dashboard' ? 'bg-black text-white' : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'}`}
+          >
+            <Folder className="inline h-4 w-4 mr-2" />All Projects
+          </button>
+          <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="px-5 py-2.5 rounded-full border border-gray-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-500 bg-white hover:bg-gray-50 transition-all">
+            <option value="all">All Categories</option>
+            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <button onClick={() => setShowAddProject(true)} className="ml-auto px-5 py-2.5 rounded-full text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition-all shadow-sm">
+            <Plus className="inline h-4 w-4 mr-2" />New Project
+          </button>
+        </div>
 
-        {weather && !loading && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            {/* Main Weather Section */}
-            <div className="lg:col-span-8 space-y-6">
-              
-              {/* Hero Weather Card */}
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-shadow">
-                <div className="flex items-start justify-between mb-8">
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <MapPin size={28} className="text-white" />
+        {/* Tasks View */}
+        {activeView === 'tasks' && (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-lg">
+            <div className="p-8 border-b border-gray-100">
+              <button onClick={() => setActiveView('dashboard')} className="text-red-600 hover:text-red-700 mb-6 text-sm font-medium">← Back to Dashboard</button>
+              <h2 className="text-4xl font-bold text-black mb-3">
+                {selectedStat === 'all' ? 'All Tasks' : 
+                 selectedStat === 'completed' ? 'Completed Tasks' :
+                 selectedStat === 'in-progress' ? 'In Progress Tasks' :
+                 'Overdue Tasks'}
+              </h2>
+              <p className="text-gray-600 text-lg">
+                {selectedStat === 'all' ? `Showing all ${stats.totalTasks} tasks across all projects` :
+                 selectedStat === 'completed' ? `${stats.completedTasks} tasks completed` :
+                 selectedStat === 'in-progress' ? `${stats.inProgressTasks} tasks currently in progress` :
+                 `${stats.overdueTasks} tasks past their due date`}
+              </p>
+            </div>
+            <div className="p-8">
+              <div className="space-y-4">
+                {(selectedStat === 'overdue' ? getOverdueTasks() : getTasksByStatus(selectedStat === 'all' ? 'all' : selectedStat)).map(task => (
+                  <div key={`${task.projectId}-${task.id}`} className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <span className={`text-xs px-3 py-1.5 rounded-full font-medium border inline-block mb-2 ${getCategoryColor(task.projectCategory)}`}>
+                          {task.projectCategory}
+                        </span>
+                        <h3 className="text-lg font-bold text-black mb-1">{task.title}</h3>
+                        <p className="text-sm text-gray-600">
+                          <strong>Project:</strong> {task.projectName}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const project = projects.find(p => p.id === task.projectId);
+                          setSelectedProject(project);
+                          setActiveView('project');
+                        }}
+                        className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all text-sm font-medium ml-4"
+                      >
+                        View Project
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t border-gray-100">
                       <div>
-                        <h2 className="text-3xl font-bold text-white">{weather.city}</h2>
-                        <p className="text-white/70">{weather.country}</p>
+                        <p className="text-xs text-gray-500 mb-1">Assignee</p>
+                        <p className="text-sm font-medium text-gray-900 flex items-center gap-1">
+                          <Users className="h-3.5 w-3.5" />
+                          {task.assignee || 'Unassigned'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">Priority</p>
+                        <span className={`text-xs px-2.5 py-1 rounded-full border font-medium ${getPriorityColor(task.priority)}`}>
+                          {task.priority}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">Status</p>
+                        <span className="text-sm font-medium text-gray-900 capitalize flex items-center gap-1.5">
+                          <div className={`w-2.5 h-2.5 rounded-full ${getStatusColor(task.status)}`} />
+                          {task.status === 'in-progress' ? 'In Progress' : task.status}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">Due Date</p>
+                        {task.dueDate ? (
+                          <p className="text-sm font-medium text-gray-900 flex items-center gap-1">
+                            <Calendar className="h-3.5 w-3.5" />
+                            {new Date(task.dueDate).toLocaleDateString()}
+                          </p>
+                        ) : (
+                          <p className="text-sm text-gray-400">No date</p>
+                        )}
                       </div>
                     </div>
-                    <p className="text-white/80 text-lg capitalize">{weather.description}</p>
                   </div>
-                  <div className="text-right">
-                    <div className="text-white/70 text-sm mb-1">Feels like</div>
-                    <div className="text-4xl font-bold text-white">{weather.feelsLike}°</div>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-8 items-center">
-                  <div>
-                    <div className="text-8xl md:text-9xl font-bold text-white mb-4">
-                      {weather.temp}°
-                    </div>
-                    <div className="text-3xl text-white/90 mb-4">{weather.condition}</div>
-                    <div className="flex gap-6 text-lg text-white/80">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp size={20} />
-                        <span>{weather.tempMax}°</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <TrendingUp size={20} className="rotate-180" />
-                        <span>{weather.tempMin}°</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex justify-center">
-                    {React.createElement(getWeatherIcon(weather.condition), { 
-                      size: 160, 
-                      className: "text-white drop-shadow-2xl animate-pulse", 
-                      strokeWidth: 1.5 
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Hourly Forecast */}
-              {hourlyForecast.length > 0 && (
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-6 shadow-2xl">
-                  <h3 className="text-2xl font-bold text-white mb-6">Hourly Forecast</h3>
-                  <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-                    {hourlyForecast.map((hour, index) => (
-                      <div key={index} className="flex-shrink-0 text-center p-5 rounded-2xl bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all min-w-[100px]">
-                        <div className="text-white/80 font-medium mb-3">{hour.time}</div>
-                        {React.createElement(hour.icon, { size: 40, className: "mx-auto text-white mb-3" })}
-                        <div className="text-2xl font-bold text-white">{hour.temp}°</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Weather Details Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-3 bg-blue-400/30 rounded-xl">
-                      <Droplets className="text-white" size={24} />
-                    </div>
-                  </div>
-                  <div className="text-sm text-white/70 mb-1">Humidity</div>
-                  <div className="text-3xl font-bold text-white">{weather.humidity}%</div>
-                </div>
-
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-3 bg-green-400/30 rounded-xl">
-                      <Wind className="text-white" size={24} />
-                    </div>
-                  </div>
-                  <div className="text-sm text-white/70 mb-1">Wind Speed</div>
-                  <div className="text-3xl font-bold text-white">{weather.windSpeed}</div>
-                  <div className="text-xs text-white/60 mt-1">{weather.windDirection} km/h</div>
-                </div>
-
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-3 bg-purple-400/30 rounded-xl">
-                      <Gauge className="text-white" size={24} />
-                    </div>
-                  </div>
-                  <div className="text-sm text-white/70 mb-1">Pressure</div>
-                  <div className="text-3xl font-bold text-white">{weather.pressure}</div>
-                  <div className="text-xs text-white/60 mt-1">hPa</div>
-                </div>
-
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-3 bg-orange-400/30 rounded-xl">
-                      <Eye className="text-white" size={24} />
-                    </div>
-                  </div>
-                  <div className="text-sm text-white/70 mb-1">Visibility</div>
-                  <div className="text-3xl font-bold text-white">{weather.visibility}</div>
-                  <div className="text-xs text-white/60 mt-1">km</div>
-                </div>
-              </div>
-
-              {/* Sun Times & Extra Info */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="backdrop-blur-xl bg-gradient-to-br from-orange-400/20 to-pink-400/20 border border-white/20 rounded-2xl p-6 text-white">
-                  <Sunrise size={32} className="mb-3" />
-                  <div className="text-sm opacity-80 mb-1">Sunrise</div>
-                  <div className="text-2xl font-bold">{weather.sunrise}</div>
-                </div>
-
-                <div className="backdrop-blur-xl bg-gradient-to-br from-indigo-400/20 to-purple-400/20 border border-white/20 rounded-2xl p-6 text-white">
-                  <Sunset size={32} className="mb-3" />
-                  <div className="text-sm opacity-80 mb-1">Sunset</div>
-                  <div className="text-2xl font-bold">{weather.sunset}</div>
-                </div>
-
-                <div className="backdrop-blur-xl bg-gradient-to-br from-cyan-400/20 to-blue-400/20 border border-white/20 rounded-2xl p-6 text-white">
-                  <Thermometer size={32} className="mb-3" />
-                  <div className="text-sm opacity-80 mb-1">Dew Point</div>
-                  <div className="text-2xl font-bold">{weather.dewPoint}°C</div>
-                </div>
-
-                <div className="backdrop-blur-xl bg-gradient-to-br from-green-400/20 to-emerald-400/20 border border-white/20 rounded-2xl p-6 text-white">
-                  <Compass size={32} className="mb-3" style={{ transform: `rotate(${weather.windDeg}deg)` }} />
-                  <div className="text-sm opacity-80 mb-1">Wind Dir</div>
-                  <div className="text-2xl font-bold">{weather.windDirection}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Sidebar */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* 5-Day Forecast */}
-              {dailyForecast.length > 0 && (
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-6 shadow-2xl">
-                  <h3 className="text-2xl font-bold text-white mb-6">5-Day Forecast</h3>
-                  <div className="space-y-4">
-                    {dailyForecast.map((day, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-all">
-                        <div className="flex items-center gap-4">
-                          <span className="text-white font-semibold w-12">{day.day}</span>
-                          {React.createElement(day.icon, { size: 28, className: "text-white" })}
-                        </div>
-                        <div className="flex items-center gap-4">
-                          <span className="text-white font-bold text-lg">{day.high}°</span>
-                          <span className="text-white/60 text-lg">{day.low}°</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Air Quality */}
-              <div className="backdrop-blur-xl bg-gradient-to-br from-emerald-500/30 to-green-500/30 border border-white/20 rounded-3xl p-6 shadow-2xl text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold">Air Quality</h3>
-                  <Waves size={28} />
-                </div>
-                <div className="mb-4">
-                  <div className="text-6xl font-bold mb-2">42</div>
-                  <div className="text-xl opacity-90">Good</div>
-                </div>
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/20">
-                  <div>
-                    <div className="text-sm opacity-80">PM2.5</div>
-                    <div className="text-2xl font-semibold">12 µg/m³</div>
-                  </div>
-                  <div>
-                    <div className="text-sm opacity-80">PM10</div>
-                    <div className="text-2xl font-semibold">24 µg/m³</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Weather Alert */}
-              <div className="backdrop-blur-xl bg-gradient-to-br from-amber-500/30 to-orange-500/30 border border-white/20 rounded-3xl p-6 shadow-2xl text-white">
-                <div className="flex items-center gap-3 mb-4">
-                  <Zap size={28} />
-                  <h3 className="text-2xl font-bold">Weather Alert</h3>
-                </div>
-                <p className="text-sm opacity-90 leading-relaxed">
-                  No active weather alerts for {weather.city}. Conditions are normal.
-                </p>
+                ))}
               </div>
             </div>
           </div>
         )}
 
-        {!weather && !loading && !error && (
-          <div className="text-center py-32">
-            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-12 inline-block shadow-2xl">
-              <Sun size={100} className="mx-auto text-white mb-6 animate-pulse" />
-              <h2 className="text-4xl font-bold text-white mb-4">Welcome to Weather Dashboard</h2>
-              <p className="text-white/80 text-xl">Search for a city to view detailed weather information</p>
+        {/* Projects Grid */}
+        {activeView === 'dashboard' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map(project => {
+              const progress = getProgress(project);
+              return (
+                <div key={project.id} className="bg-white rounded-2xl border border-gray-100 hover:shadow-xl transition-all group">
+                  <div className="p-6">
+                    <div className="flex justify-between mb-4">
+                      <span className="text-xs px-3 py-1.5 rounded-full font-medium bg-red-50 text-red-700 border border-red-200">{project.category}</span>
+                      <button onClick={() => deleteProject(project.id)} className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-600">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <h3 className="text-xl font-bold text-black mb-2">{project.name}</h3>
+                    <p className="text-sm text-gray-600 mb-5">{project.description}</p>
+                    <div className="mb-5">
+                      <div className="flex justify-between text-xs mb-2">
+                        <span className="text-gray-600 font-medium">Progress</span>
+                        <span className="text-black font-bold">{progress}%</span>
+                      </div>
+                      <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="bg-red-600 h-2 rounded-full transition-all" style={{ width: `${progress}%` }} />
+                      </div>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600 mb-5 pt-4 border-t border-gray-100">
+                      <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{project.tasks.length} tasks</span>
+                      <span className="flex items-center gap-1.5"><Users className="h-4 w-4" />{new Set(project.tasks.map(t => t.assignee).filter(Boolean)).size} members</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setActiveView('project');
+                      }}
+                      className="w-full py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                    >
+                      View Project
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Project Detail */}
+        {activeView === 'project' && selectedProject && (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-lg">
+            <div className="p-8 border-b border-gray-100">
+              <button onClick={() => setActiveView('dashboard')} className="text-red-600 hover:text-red-700 mb-6 text-sm font-medium">← Back</button>
+              <div className="mb-6">
+                <span className="text-sm px-3 py-1.5 rounded-full font-medium bg-red-50 text-red-700 border border-red-200 inline-block mb-4">{selectedProject.category}</span>
+                <h2 className="text-4xl font-bold text-black mb-3">{selectedProject.name}</h2>
+                <p className="text-gray-600 text-lg">{selectedProject.description}</p>
+              </div>
+              <button onClick={() => setShowAddTask(true)} className="px-5 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all text-sm font-medium shadow-sm hover:shadow-md">
+                <Plus className="inline h-4 w-4 mr-2" />Add Task
+              </button>
+            </div>
+            <div className="p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {['todo', 'in-progress', 'completed'].map(status => (
+                  <div key={status} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                    <h3 className="font-bold text-black mb-5 capitalize flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${status === 'completed' ? 'bg-green-500' : status === 'in-progress' ? 'bg-red-500' : 'bg-gray-300'}`} />
+                      {status === 'in-progress' ? 'In Progress' : status}
+                      <span className="ml-auto bg-white text-gray-700 text-xs px-3 py-1 rounded-full font-bold">{selectedProject.tasks.filter(t => t.status === status).length}</span>
+                    </h3>
+                    <div className="space-y-4">
+                      {selectedProject.tasks.filter(t => t.status === status).map(task => (
+                        <div key={task.id} className="bg-white rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
+                          {editingTask?.id === task.id ? (
+                            <div className="space-y-3">
+                              <input type="text" value={editingTask.title} onChange={(e) => setEditingTask({ ...editingTask, title: e.target.value })} className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-red-500" />
+                              <select value={editingTask.assignee} onChange={(e) => setEditingTask({ ...editingTask, assignee: e.target.value })} className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-red-500">
+                                <option value="">Select member</option>
+                                {Object.entries(teamMembers).map(([dept, members]) => (
+                                  <optgroup key={dept} label={dept}>
+                                    {members.map(m => <option key={m.name} value={m.name}>{m.name} - {m.role}</option>)}
+                                  </optgroup>
+                                ))}
+                              </select>
+                              <select value={editingTask.priority} onChange={(e) => setEditingTask({ ...editingTask, priority: e.target.value })} className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-red-500">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                              </select>
+                              <input type="date" value={editingTask.dueDate} onChange={(e) => setEditingTask({ ...editingTask, dueDate: e.target.value })} className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-red-500" />
+                              <div className="flex gap-2">
+                                <button onClick={() => { updateTask(selectedProject.id, task.id, editingTask); setEditingTask(null); }} className="flex-1 py-2.5 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all text-sm font-medium shadow-sm">
+                                  <Check className="inline h-4 w-4 mr-1" /> Save
+                                </button>
+                                <button onClick={() => setEditingTask(null)} className="flex-1 py-2.5 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-all text-sm font-medium">
+                                  <X className="inline h-4 w-4 mr-1" /> Cancel
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="flex justify-between mb-3">
+                                <h4 className="font-semibold text-black text-sm">{task.title}</h4>
+                                <div className="flex gap-1">
+                                  <button onClick={() => setEditingTask(task)} className="text-red-600"><Edit2 className="h-4 w-4" /></button>
+                                  <button onClick={() => deleteTask(selectedProject.id, task.id)} className="text-gray-400 hover:text-red-600"><Trash2 className="h-4 w-4" /></button>
+                                </div>
+                              </div>
+                              <div className="text-xs text-gray-600 mb-3 flex items-center gap-1.5"><Users className="h-3.5 w-3.5" />{task.assignee || 'Unassigned'}</div>
+                              <div className="flex justify-between mb-4">
+                                <span className={`text-xs px-2.5 py-1 rounded-full border font-medium ${task.priority === 'high' ? 'bg-red-50 text-red-600 border-red-200' : task.priority === 'medium' ? 'bg-orange-50 text-orange-600 border-orange-200' : 'bg-gray-50 text-gray-600 border-gray-200'}`}>{task.priority}</span>
+                                {task.dueDate && <span className="text-xs text-gray-500 flex items-center gap-1"><Calendar className="h-3.5 w-3.5" />{new Date(task.dueDate).toLocaleDateString()}</span>}
+                              </div>
+                              <select value={task.status} onChange={(e) => updateTask(selectedProject.id, task.id, { status: e.target.value })} className="w-full px-3 py-2 text-xs border rounded-lg focus:ring-2 focus:ring-red-500">
+                                <option value="todo">To Do</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                              </select>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modals */}
+        {showAddProject && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl p-8 w-full max-w-md">
+              <h3 className="text-3xl font-bold mb-6 text-black">New Project</h3>
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+                  <input type="text" value={newProject.name} onChange={(e) => setNewProject({ ...newProject, name: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500" placeholder="Project name" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                  <select value={newProject.category} onChange={(e) => setNewProject({ ...newProject, category: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500">
+                    {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                  <textarea value={newProject.description} onChange={(e) => setNewProject({ ...newProject, description: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500" rows="3" />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button onClick={addProject} className="flex-1 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all font-semibold shadow-sm hover:shadow-md">Create Project</button>
+                <button onClick={() => setShowAddProject(false)} className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-all font-semibold">Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showAddTask && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl p-8 w-full max-w-md">
+              <h3 className="text-3xl font-bold mb-6 text-black">New Task</h3>
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                  <input type="text" value={newTask.title} onChange={(e) => setNewTask({ ...newTask, title: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Assignee</label>
+                  <select value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500">
+                    <option value="">Select member</option>
+                    {Object.entries(teamMembers).map(([dept, members]) => (
+                      <optgroup key={dept} label={dept}>
+                        {members.map(m => <option key={m.name} value={m.name}>{m.name} - {m.role}</option>)}
+                      </optgroup>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Priority</label>
+                  <select value={newTask.priority} onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Due Date</label>
+                  <input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-red-500" />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button onClick={addTask} className="flex-1 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all font-semibold shadow-sm hover:shadow-md">Create Task</button>
+                <button onClick={() => setShowAddTask(false)} className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-all font-semibold">Cancel</button>
+              </div>
             </div>
           </div>
         )}
       </div>
     </div>
   );
-};
-
-export default WeatherDashboard;
+}
